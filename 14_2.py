@@ -1,17 +1,20 @@
 import numpy as np
-import matplotlib.pyplot as plt 
+import pandas as pd
+import matplotlib.pyplot as plt
 
-# Дані для графіка
-x = [2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
-y = [47812949, 47451626, 47105171, 46787786, 46509355, 46258189, 46053331, 45870741, 45706086, 45593342, 45489648, 45272155, 45167350, 45038236, 44880758, 44690584, 44474512, 44207754, 43848986, 38000000, 37000000]  # Дані для України
-z = [59647577, 59987905, 60401206, 60846820, 61322463, 61806995, 62276270, 62766365, 63258810, 63700215, 64128273, 64602298, 65116219, 65611593, 66058859, 66460344, 66836327, 67081234, 67026292, 67791000, 68350000]  # Дані для Великої Британії
+# Завантаження даних з файлу population.csv
+data = pd.read_csv('population.csv')
 
-# Перетворення списків на масиви NumPy
-x = np.array(x)
-y = np.array(y)
-z = np.array(z)
+# Відокремлення даних для кожної країни
+ukraine_data = data[data['Country Name'] == 'Ukraine']
+uk_data = data[data['Country Name'] == 'United Kingdom']
 
-# Створення графіка
+# Витягнення значень років і чисельності населення для кожної країни
+x = ukraine_data['Time'].values  # Роки
+y = ukraine_data['Value'].values  # Дані для України
+z = uk_data['Value'].values       # Дані для Великої Британії
+
+# Створення лінійного графіка
 plt.figure(figsize=(10, 6))
 
 # Лінійний графік для Великої Британії
@@ -25,9 +28,9 @@ plt.plot(x, y, label='Ukraine', color="blue")
 plt.scatter(x, y, color="blue")
 
 # Назва графіка та підписи осей
-plt.title('Population, total for Ukraine and United Kingdom', fontsize=15)  # Назва графіка
-plt.xlabel('Year', fontsize=12, color='red')  # Підпис осі X
-plt.ylabel('Indicator', fontsize=12, color='red')  # Підпис осі Y
+plt.title('Population, total for Ukraine and United Kingdom', fontsize=15)
+plt.xlabel('Year', fontsize=12, color='red')
+plt.ylabel('Indicator', fontsize=12, color='red')
 
 # Відображення легенди
 plt.legend()
